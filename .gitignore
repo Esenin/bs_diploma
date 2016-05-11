@@ -1,5 +1,6 @@
 matmex-diploma.cls
 *.pdf
+ugost2008ls.bst
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
