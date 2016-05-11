@@ -1,4 +1,5 @@
 matmex-diploma.cls
+*.pdf
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
