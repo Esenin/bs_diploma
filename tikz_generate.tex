@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\usepackage{amsfonts}
+\usepackage{amssymb,amsmath,latexsym}
+\usepackage{amsthm}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}  
+\usepackage[english,russian]{babel}
+
+\usepackage[dvips]{graphics}
+\usepackage[dvips]{graphicx}
+\usepackage[dvips]{color}
+\usepackage{curves}
+\usepackage{indentfirst}
+\usepackage{epsfig}             % MUST!!!
+\usepackage{cite}
+
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usepackage{csvsimple}
+
+\usepackage{tikz} % To generate the plot from csv
+\pgfplotsset{compat=newest} % Allows to place the legend below plot
+\usepgfplotslibrary{units} % Allows to enter the units nicely
+\usepackage{csvsimple}
+\usepackage{pgfplots}
+\usepackage{tikz}
+
+% set up externalization
+\usetikzlibrary{external}
+\tikzset{external/system call={latex \tikzexternalcheckshellescape -halt-on-error
+-interaction=batchmode -jobname "\image" "\texsource";
+dvips -o "\image".ps "\image".dvi;
+ps2eps "\image.ps"}}
+\tikzexternalize
+
+\begin{document}
+    \begin{tikzpicture}
+        \begin{axis}[
+        width=1.0\textwidth,
+        height=\axisdefaultheight,
+        view={0}{90},
+        grid=major, 
+        % scale only axis,
+        %xtick={0, 400, 800, 1200, 1600},
+        xlabel={Процент использованных данных},
+        ylabel={Ошибка (RMSE), м/с}]
+        \addplot+[mark=none] table [x=x, y=y, col sep=comma, mark=none] {csv/rmse_seq.csv};
+        \addplot+[dashed, mark=none] table [x=x, y=original, col sep=comma, mark=none] {csv/rmse_seq.csv}; %line width=3pt
+        \legend{CS-i.i.d., Legacy}
+        \end{axis}
+    \end{tikzpicture}
+\end{document}
+
+
+
+
+
+% \begin{figure}[h]
+%     \centering
+%     \begin{tikzpicture}
+%         \begin{axis}[
+%         width=.9\textwidth,
+%         height=\axisdefaultheight,
+%         view={0}{90},
+%         grid=major, 
+%         xtick={0, 100, 200, ..., 600},
+%         xlabel={Число использованных коэффициентов результата вейвлет-трансформации},
+%         ylabel={Ошибка (RMSE), м/с}]
+%         \addplot+[mark=none] table [x=coef, y=value, col sep=comma, mark=none] {csv/rmse_coef_in_use_reconstr.csv};
+%         \end{axis}
+%     \end{tikzpicture}
+%     \begin{tikzpicture}
+%         \begin{axis}[
+%         width=.9\textwidth,
+%         height=\axisdefaultheight,
+%         view={0}{90},
+%         grid=major, 
+%         % scale only axis,
+%         xlabel={Коэффициенты вейвлет преобразования в отсортированном порядке},
+%         ylabel={Амплитуда}]
+%         \addplot+[mark=none] table [x=coef, y=value, col sep=comma, mark=none] {csv/line_coefs_sparse_reconstr.csv};
+%         \end{axis}
+%     \end{tikzpicture}
+%     \caption{Ошибка восстановления карты скоростей искусственной модели при использовании неполного набора коэффициентов вейвлет-преобразования (сверху) и набор коэффициентов вейвлет-преобразования (снизу)}
+%     \label{fig:used_coeff}  
+% \end{figure}
